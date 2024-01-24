@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>View Switcher</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 0;
+        margin: 0;
+      }
+      .nav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #eee;
+      }
+      .view-container {
+        position: relative;
+        display: block;
+        overflow: hidden;
+        height: 600px; /* Adjust the height as needed */
+        width: 99%; /* Adjust the width as needed */
+        margin: 0 auto;
+        border: 1px solid #eee;
+        border-radius: 5px;
+        overflow: none;
+      }
+
+      .view {
+        position: absolute;
+        text-align: center;
+        width: 100%;
+        height: 100%;
+        display: none;
+        background-color: #eee;
+        margin: 0px;
+        overflow: none;
+      }
+      .view h1,
+      .view p {
+        margin: 5px 10px;
+      }
+      button {
+        padding: 10px;
+        margin: 0 5px;
+        border-radius: 5px;
+        border: 1px solid #eee;
+        background-color: #fff;
+        background-image: &#128512;
+        background-repeat: repeat;
+        cursor: pointer;
+      }
+
+      /* Keyframe animations */
+      @keyframes slideInFromLeft {
+        from {
+          transform: translateX(-100%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes slideOutToLeft {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-100%);
+        }
+      }
+
+      @keyframes slideInFromRight {
+        from {
+          transform: translateX(100%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes slideOutToRight {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(100%);
+        }
+      }
+
+      /* Apply animation */
+      .slide-in-left {
+        animation: slideInFromLeft 0.5s forwards;
+      }
+
+      .slide-out-left {
+        animation: slideOutToLeft 0.5s forwards;
+      }
+
+      .slide-in-right {
+        animation: slideInFromRight 0.5s forwards;
+      }
+
+      .slide-out-right {
+        animation: slideOutToRight 0.5s forwards;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav">
+      <button id="viewOneButton">💀</button>
+      <button id="viewTwoButton">View Two</button>
+    </nav>
+    <div class="view-container">
+      <div class="view" id="view-one">
+        <h1>View One</h1>
+        <p>This is the first view.</p>
+      </div>
+
+      <div class="view" id="view-two">
+        <h1>View Two</h1>
+        <p>This is the second view.</p>
+      </div>
+    </div>
+
+    <script>
+      var viewOneButton = document.getElementById("viewOneButton");
+      var viewTwoButton = document.getElementById("viewTwoButton");
+      var viewOne = document.getElementById("view-one");
+      var viewTwo = document.getElementById("view-two");
+
+      // Initially, load View One
+      window.onload = function () {
+        viewOne.style.display = "block";
+        viewOne.classList.add("slide-in-right");
+        viewOneButton.disabled = true;
+      };
+
+      viewOneButton.addEventListener("click", function () {
+        viewOne.style.display = "block";
+        viewOne.classList.add("slide-in-right");
+        viewTwo.classList.add("slide-out-left");
+
+        setTimeout(() => {
+          viewTwo.style.display = "none";
+          viewTwo.classList.remove("slide-out-left");
+          viewOne.classList.remove("slide-in-right");
+        }, 500); // match the duration of the animation
+
+        viewOneButton.disabled = true;
+        viewTwoButton.disabled = false;
+      });
+
+      viewTwoButton.addEventListener("click", function () {
+        viewTwo.style.display = "block";
+        viewTwo.classList.add("slide-in-left");
+        viewOne.classList.add("slide-out-right");
+
+        setTimeout(() => {
+          viewOne.style.display = "none";
+          viewOne.classList.remove("slide-out-right");
+          viewTwo.classList.remove("slide-in-left");
+        }, 500); // match the duration of the animation
+
+        viewOneButton.disabled = false;
+        viewTwoButton.disabled = true;
+      });
+    </script>
+  </body>
+</html>
